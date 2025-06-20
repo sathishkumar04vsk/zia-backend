@@ -1,26 +1,42 @@
 const fs = require("fs");
-const http = require('http');
-const express = require('express');
+const http = require("http");
+const express = require("express");
 
+const app = express();
 
-const server = http.createServer((request, response)=>{
-    
-    if (request.url ==="/users"){
-        response.writeHead(200, {'content-type':'application/json'});
-        response.end([{"name":"Sathishkumar", "id":1},{"name":"Yuvaraj",id:2},{"name":"Sakthipriya",id:3}]);
-    } 
+app.use(express.json());
 
-    if (request.url==="/user/1"){
-        response.writeHead(200, {'content-type':'application/json'});
-        response.end([{"name":"Sathishkumar", "id":1}])
+let users = [
+  { name: "Sathishkumar", id: 1 },
+  { name: "Yuvaraj", id: 2 },
+  { name: "Sakthipriya", id: 3 },
+];
 
-    }
+app.get('/users/:id',(req, res)=>{
+    const {id} = req.params;
+    const user = users.find(user=>user.id ==id)
+    console.log(user);
+    res.send(user)
+})
 
-    response.end();
+app.get('/users',(req, res)=>{
+    res.send(users)
+})
+
+app.post('/users',(req, res)=>{
+    const {name,id} = req.body;
+    users.push({name,id})
+    res.send({name,id},201)
+})
+
+app.delete('/users/:id', (req, res)=>{
+    const { id } = req.params;
+    users = users.filter(item=>item.id !=id)
+    res.send({"detail":"User deleted sucessfully!"},204)
 })
 
 
-server.listen(3000, ()=>{
-    console.log("nodejs server is runing on localhost:3000!")
-})
 
+app.listen(3000, () => {
+  console.log("nodejs server is runing on localhost:3000!");
+});
