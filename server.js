@@ -1,5 +1,7 @@
 const express = require("express");
-const Routes = require("./routes/userRoutes");
+const userRoutes = require("./routes/userRoutes");
+const foodRoutes = require("./routes/foodRoutes");
+
 const connectDB = require("./config/db");
 const dontenv = require('dotenv');
 
@@ -9,7 +11,8 @@ const app = express();
 connectDB();
 app.use(express.json());
 
-app.use('/api/users/',Routes)
+app.use('/api/users/',userRoutes)
+app.use('/api/foods/',foodRoutes)
 
 
 app.listen(3000, () => {
