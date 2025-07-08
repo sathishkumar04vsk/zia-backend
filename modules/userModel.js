@@ -7,7 +7,15 @@ const userSchema = new mongoose.Schema({
     email: String,
     phone_number: Number,
     password: String,
+    token: {
+        type: String,
+        default: null,
+        
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
+    }
 })
-
 
 module.exports = mongoose.model("User",userSchema)
