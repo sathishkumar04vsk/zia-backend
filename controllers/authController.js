@@ -11,7 +11,6 @@ exports.RegisterUser = async (req, res) => {
     if (!name || !email || !phone_number || !password) {
       return res.status(400).send({ error: "All fields are required" });
     }
-
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = new User({
       name,
