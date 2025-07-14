@@ -76,9 +76,10 @@ exports.LoginUser = async (req, res) => {
       secure: process.env.NODE_ENV === "production", // Set to true in production
       maxAge: 24 * 60 * 60 * 1000, // 1 day
     });
-    res.status(200).send({ message: "Login successful", user, token });
+    res.status(200).send({ message: "User Login successful", user, token });
   } catch (error) {
     console.error("Error logging in user:", error);
     res.status(500).send({ error: "Failed to log in user" });
   }
 }
+
